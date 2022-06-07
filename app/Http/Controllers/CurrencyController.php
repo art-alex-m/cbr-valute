@@ -17,7 +17,7 @@ class CurrencyController extends Controller
      *     @OA\Response(
      *        response="200",
      *        description="Список курсов валют",
-     *        @OA\JsonContent(ref="#/components/schemas/CurrencyDto"),
+     *        @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/CurrencyDto")),
      *     ),
      *     @OA\Response(response="422", description="Unprocessable Content"),
      * )
