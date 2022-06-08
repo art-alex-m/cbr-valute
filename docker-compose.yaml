@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 services:
   app:
     image: 'laravel-cbr:php8.1-focal-dev'
@@ -18,7 +18,6 @@ services:
       PHP_IDE_CONFIG: serverName=${IDE_SERVER_NAME:-project}
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
       XDEBUG_CLIENT_HOST: ${XDEBUG_CLIENT_HOST:-localhost}
-      XDEBUG_CLIENT_PORT: ${XDEBUG_CLIENT_PORT:-9003}
       XDEBUG_IDEKEY: ${XDEBUG_IDEKEY:-""}
       XDEBUG_OUTPUT_DIR: ${XDEBUG_OUTPUT_DIR}
     volumes:
@@ -68,6 +67,11 @@ services:
 networks:
   laravel-8-cbr:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.100.11.0/24
+    driver_opts:
+      com.docker.network.bridge.name: cbr-100
 
 
 volumes:

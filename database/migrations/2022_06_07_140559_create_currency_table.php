@@ -22,6 +22,8 @@ return new class extends Migration {
 
             $table->foreign('char_code')->on('currency_codes')->references('char_code')
                 ->cascadeOnDelete()->cascadeOnUpdate();
+
+            $table->unique(['char_code', 'date']);
         });
     }
 

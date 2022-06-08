@@ -21,6 +21,10 @@ use Illuminate\Database\Eloquent\Model;
 class Currency extends Model
 {
     protected $casts = [
-        'date' => Carbon::class,
+        'date' => 'datetime:Y-m-d',
+    ];
+
+    protected $fillable = [
+        'date',
     ];
 }

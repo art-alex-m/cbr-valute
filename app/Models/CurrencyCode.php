@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,9 +16,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CurrencyCode extends Model
 {
+    public const DEFAULT_BASE = 'RUB';
+
     public $timestamps = false;
     public $incrementing = false;
 
     protected $primaryKey = 'char_code';
     protected $keyType = 'string';
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('active', '=', true);
+    }
 }
