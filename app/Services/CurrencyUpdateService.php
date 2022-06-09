@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\DateFormatEnum;
 use App\Models\Currency;
 use App\Models\CurrencyCode;
 use Carbon\Carbon;
@@ -62,7 +63,10 @@ class CurrencyUpdateService
     protected function createCurrency(object $valute, Carbon $date): void
     {
         /** @var Currency $rate */
-        $rate = Currency::firstOrNew(['date' => $date->format('Y-m-d'), 'char_code' => $valute->CharCode]);
+        $rate = Currency::firstOrNew([
+            'date' => $date->format(DateFormatEnum::DB->value),
+            'char_code' => $valute->CharCode
+        ]);
         $rate->date = $date;
         $rate->value = (float)str_replace(',', '.', $valute->Value);
         $rate->nominal = (int)$valute->Nominal;
@@ -79,7 +83,10 @@ class CurrencyUpdateService
     protected function createBase(Carbon $date): void
     {
         /** @var Currency $rate */
-        $rate = Currency::firstOrNew(['date' => $date->format('Y-m-d'), 'char_code' => CurrencyCode::DEFAULT_BASE]);
+        $rate = Currency::firstOrNew([
+            'date' => $date->format(DateFormatEnum::DB->value),
+            'char_code' => CurrencyCode::DEFAULT_BASE
+        ]);
         $rate->date = $date;
         $rate->value = 1;
         $rate->nominal = 1;

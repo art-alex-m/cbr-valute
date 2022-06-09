@@ -42,14 +42,14 @@ class CurrencyDto extends DataTransferObject
     public float $value;
 
     /**
-     * @var float Отношение к базовому курсу.
-     * @OA\Property(example=30.9436)
+     * @var float|null Отношение к базовому курсу.
+     * @OA\Property(example=30.9436, nullable=true)
      */
-    public float $diffBase;
+    public ?float $diffBase;
 
     /**
-     * @var float Разница с предыдущим днем.
-     * @OA\Property(example=-2.0436)
+     * @var float|null Разница с предыдущим днем.
+     * @OA\Property(example=-2.0436, nullable=true)
      */
-    public float $diffYesterday;
+    public ?float $diffYesterday;
 }

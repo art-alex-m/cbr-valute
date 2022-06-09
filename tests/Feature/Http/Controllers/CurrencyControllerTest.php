@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Enums\DateFormatEnum;
+use Symfony\Component\VarDumper\VarDumper;
 use Tests\TestCase;
 
 class CurrencyControllerTest extends TestCase
@@ -11,10 +13,24 @@ class CurrencyControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function testCurrencyListSuccessfull(): void
     {
-        $response = $this->get('/');
+        $response = $this->call('GET', '/api/currency/list', [
+            'base' => 'USD',
+            'date' => date(DateFormatEnum::DB->value)
+        ]);
 
         $response->assertStatus(200);
+        VarDumper::dump($response->getContent());
+        $response->assertJsonStructure([
+            '*' => [
+                'charCode',
+                'date',
+                'nominal',
+                'value',
+                'diffBase',
+                'diffYesterday',
+            ]
+        ]);
     }
 }
