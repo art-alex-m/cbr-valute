@@ -41,6 +41,7 @@ class CurrencyController extends Controller
      *           type="string",
      *           maxLength=3,
      *           minLength=3,
+     *           enum={"RUB", "USD", "EUR", "JPY", "CNY"}
      *        ),
      *        example="USD",
      *     ),
