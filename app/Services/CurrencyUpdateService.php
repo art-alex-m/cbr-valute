@@ -63,16 +63,14 @@ class CurrencyUpdateService
     protected function createCurrency(object $valute, Carbon $date): void
     {
         /** @var Currency $rate */
-        $rate = Currency::firstOrNew([
+        $rate = Currency::updateOrCreate([
             'date' => $date->format(DateFormatEnum::DB->value),
             'char_code' => $valute->CharCode
+        ], [
+            'value' => (float)str_replace(',', '.', $valute->Value),
+            'nominal' => (int)$valute->Nominal,
+            'updated_at' => Carbon::now(),
         ]);
-        $rate->date = $date;
-        $rate->value = (float)str_replace(',', '.', $valute->Value);
-        $rate->nominal = (int)$valute->Nominal;
-        $rate->char_code = $valute->CharCode;
-
-        $rate->save();
     }
 
     /**
@@ -83,15 +81,13 @@ class CurrencyUpdateService
     protected function createBase(Carbon $date): void
     {
         /** @var Currency $rate */
-        $rate = Currency::firstOrNew([
+        $rate = Currency::updateOrCreate([
             'date' => $date->format(DateFormatEnum::DB->value),
             'char_code' => CurrencyCode::DEFAULT_BASE
+        ], [
+            'value' => 1,
+            'nominal' => 1,
+            'updated_at' => Carbon::now(),
         ]);
-        $rate->date = $date;
-        $rate->value = 1;
-        $rate->nominal = 1;
-        $rate->char_code = CurrencyCode::DEFAULT_BASE;
-
-        $rate->save();
     }
 }

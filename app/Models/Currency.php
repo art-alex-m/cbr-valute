@@ -30,23 +30,48 @@ class Currency extends Model
 
     protected $fillable = [
         'date',
+        'nominal',
+        'value',
+        'char_code',
+        'updated_at',
     ];
 
+    /**
+     *
+     * @return BelongsTo
+     */
     public function currencyCode(): BelongsTo
     {
         return $this->belongsTo(CurrencyCode::class, 'char_code', 'char_code');
     }
 
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
     public function scopeActive(Builder $query): Builder
     {
         return $query->with('currencyCode', fn($q) => $q->active());
     }
 
+    /**
+     * @param Builder $query
+     * @param CarbonInterface $date
+     *
+     * @return Builder
+     */
     public function scopeDate(Builder $query, CarbonInterface $date): Builder
     {
         return $query->where('date', '=', $date->format(DateFormatEnum::DB->value));
     }
 
+    /**
+     * @param Builder $query
+     * @param string $code
+     *
+     * @return Builder
+     */
     public function scopeCharCode(Builder $query, string $code): Builder
     {
         return $query->where('char_code', '=', $code);
