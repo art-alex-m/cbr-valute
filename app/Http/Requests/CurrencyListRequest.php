@@ -19,8 +19,8 @@ class CurrencyListRequest extends FormRequest implements CurrencyListParamsContr
     public function rules(): array
     {
         return [
-            'date' => 'string|date:' . DateFormatEnum::DB->value,
-            'base' => 'string|exists:App\Models\CurrencyCode,char_code',
+            'date' => ['string', ['date_format', DateFormatEnum::DB->value]],
+            'base' => ['string', ['exists', CurrencyCode::class, 'char_code']],
         ];
     }
 
